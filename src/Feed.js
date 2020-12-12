@@ -1,11 +1,11 @@
-import React, { useState, useEffect}from 'react'
-import TweetBox from './TweetBox'
-import './Feed.css'
-import Post from './Post'
-import db from './firebase'
+import React, { useState, useEffect } from "react";
+import TweetBox from "./TweetBox";
+import "./Feed.css";
+import Post from "./Post";
+import db from "./firebase";
 
 function Feed() {
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     db.collection("Post").onSnapshot((snapshot) =>
@@ -16,26 +16,22 @@ function Feed() {
     <div className="feed">
       <div className="feed__header">
         <h2>Home</h2>
-        </div>
-        
-        
-
-      
+      </div>
 
       <TweetBox />
 
-      
-      <Post
-        displayName='Sebastian Duarte'
-        username='Subsono33'
-        verified={true}
-        text='This is my Twitter clone'
-        avatar='https://images.unsplash.com/photo-1597769906792-4b2f9a3403a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80'
-      image="https://media.giphy.com/media/iEwxJTQmX4vd7NejxC/giphy.gif"/>
-     
-      
+      {posts.map((post) => (
+        <Post
+          displayName={post.displayName}
+          username={post.username}
+          verified={post.verified}
+          text={post.text}
+          avatar={post.avatar}
+          image={post.image}
+        />
+      ))}
     </div>
-  )
+  );
 }
 
-export default Feed
+export default Feed;
